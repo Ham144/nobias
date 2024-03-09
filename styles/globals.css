@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html {
+	margin-top: -20px; /* //menghapus putih di atas */
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px auto;
+	font: bold;
+}
+.title1 {
+	font-size: x-large;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-family: cursive;
+	text-align: center;
+	margin: 4px 0;
+}
+.title2 {
+	font-size: large;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 4px 0;
+}
+
+.description {
+	background-color: rgb(228, 222, 222);
+	font-size: small;
+	font-size: 20px;
+	text-transform: lowercase;
+	padding: 2px 12px;
+	border-radius: 3px;
+	font-family: Arial, Helvetica, sans-serif;
+	box-shadow: 2px 4px;
+}
