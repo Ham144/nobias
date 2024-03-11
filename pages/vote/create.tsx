@@ -7,6 +7,7 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { enUS } from "date-fns/locale";
 import { ForecastForm } from "../../components/ForecastForm";
+import { PlusIcon } from "@heroicons/react/24/solid";
 
 registerLocale("enUS", enUS);
 
@@ -14,6 +15,33 @@ const Create = () => {
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
 	const [title, setTitle] = useState("");
+	const [candidates, setCandidates] = useState<Candidate[]>([]);
+
+	const submitCandidate = (candidate: Candidate) => {
+		setCandidates(
+			candidates.map((c) => (c.key === candidate.key ? candidate : c))
+		);
+	};
+
+	const addCandidateForm = () => {
+		const newCandidate: Candidate = {
+			name: "test",
+			key: candidates.length + 1,
+			title: "",
+		};
+		setCandidates([...candidates, newCandidate]);
+	};
+
+	const removeCandidate = (key: number) => {
+		const newCandidates = candidates.filter(
+			(candidate) => candidate.key !== key
+		);
+		newCandidates.forEach((candidate, index) => {
+			candidate.key = index + 1;
+		});
+
+		setCandidates(newCandidates);
+	};
 
 	return (
 		<div className="grid grid-cols-1 pt-3 justify-items-center">
@@ -72,7 +100,21 @@ const Create = () => {
 			</div>
 			<h2 className="title2 pt-5">forecast</h2>
 			<div className="grid sm:grid-cols-3 lg:grid-cols-5 grid-cols-1 gap-4 sm:justify-center ">
-				<ForecastForm candidate={} submitCandidate={} removeCandidate={} />
+				{candidates.map((candidate: Candidate, index: number) => (
+					<ForecastForm
+						candidate={candidate}
+						key={index}
+						submitCandidate={submitCandidate}
+						removeCandidate={(key) =>
+							alert("removing the #" + key + " Forecast ")
+						}
+					/>
+				))}
+				<PlusIcon
+					width={100}
+					className="aspect-square hover:bg-slate-600 transition hover:cursor-pointer hover:text-white hover:rounded-lg hover:scale-110"
+					onClick={() => addCandidateForm()}
+				/>
 			</div>
 		</div>
 	);
