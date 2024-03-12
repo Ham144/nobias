@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { enUS } from "date-fns/locale";
 import { ForecastForm } from "../../components/ForecastForm";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import Button from "../../components/Button";
 
 registerLocale("enUS", enUS);
 
@@ -60,9 +61,9 @@ const Create = () => {
 				<div className="self-start space-y-16 sm:w-[500px] ">
 					<h1 className="title1">Buat Voting baru</h1>
 					<p className="description">input the required data before voting</p>
-					<h1 className="title2">Detail</h1>
+					<h1 className="title2">Detail forecast</h1>
 					<label htmlFor="title">
-						<div>Title :</div>
+						<div>Forecast Title :</div>
 						<Form
 							className=""
 							value={title}
@@ -98,16 +99,14 @@ const Create = () => {
 					</label>
 				</div>
 			</div>
-			<h2 className="title2 pt-5">forecast</h2>
-			<div className="grid sm:grid-cols-3 lg:grid-cols-5 grid-cols-1 gap-4 sm:justify-center ">
+			<h2 className="title2 pt-5">Candidates</h2>
+			<div className="grid sm:grid-cols-3 lg:grid-cols-3 grid-cols-1 gap-4 sm:justify-center ">
 				{candidates.map((candidate: Candidate, index: number) => (
 					<ForecastForm
 						candidate={candidate}
 						key={index}
 						submitCandidate={submitCandidate}
-						removeCandidate={(key) =>
-							alert("removing the #" + key + " Forecast ")
-						}
+						removeCandidate={removeCandidate}
 					/>
 				))}
 				<PlusIcon
@@ -116,6 +115,8 @@ const Create = () => {
 					onClick={() => addCandidateForm()}
 				/>
 			</div>
+			{/* {JSON.stringify(candidates)} */}
+			<Button text="Create" size="small" target="" />
 		</div>
 	);
 };
