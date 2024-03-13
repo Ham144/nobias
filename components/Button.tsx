@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation";
 type setup = {
 	text: string;
 	size: string;
-	target: string;
+	target?: string;
+	onclick?: () => void;
 };
 
 export default function Button(props: setup) {
@@ -33,8 +34,10 @@ export default function Button(props: setup) {
 		<button
 			className={`border ${pxpy(
 				props.size
-			)} border-black transition-all  font-bold uppercase hover:animate-pulse rounded-md `}
-			onClick={(target) => router.push(`/${props.target}`)}
+			)} my-1  border-black transition-all  font-bold uppercase hover:animate-pulse rounded-md`}
+			onClick={(value) => {
+				!props.onclick ? router.push(`/${props.target}`) : props.onclick();
+			}}
 		>
 			{props.text}
 		</button>
