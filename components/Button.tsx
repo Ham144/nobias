@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 
 type setup = {
+	className?: string;
 	text: string;
 	size: string;
 	target?: string;
@@ -32,7 +33,7 @@ export default function Button(props: setup) {
 
 	return (
 		<button
-			className={`border ${pxpy(
+			className={`border ${props.className}  ${pxpy(
 				props.size
 			)} my-1  border-black transition-all  font-bold uppercase hover:animate-pulse rounded-md`}
 			onClick={(value) => {

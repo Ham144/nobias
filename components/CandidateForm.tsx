@@ -26,12 +26,12 @@ export default function CandidateForm(props: Props) {
 
 	const choose = () => {
 		setChecked(!checked);
-		if (checked) setPercentage(percentage - 0.1);
-		else setPercentage(percentage + 0.1);
+		if (checked) setPercentage(percentage - 1);
+		else setPercentage(percentage + 1);
 	};
 
 	return (
-		<div className="flex sm:w-auto w-screen  rounded-s-lg shadow-lg p-2 m-2 gap-x-2 ">
+		<div className="flex justify-center sm:w-auto w-screen  rounded-s-lg shadow-lg p-2 m-2 gap-x-2 ">
 			<div className=" w-10  rounded-s-lg text-center  bg-zinc-200 self-center  py-[40px]">
 				1
 			</div>

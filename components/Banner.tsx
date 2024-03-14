@@ -3,7 +3,7 @@ import Button from "../components/Button";
 
 export default function Banner() {
 	return (
-		<div className="container   py-[90px]  sm:gap-2 bg-gradient-to-br from-slate-500 to-red-100 ">
+		<div className="container   py-[100px]  sm:gap-2 bg-gradient-to-br from-slate-500 to-red-100 ">
 			<h1 className="title1">Super Forecasting provider</h1>
 			<p className="description text-center mx-2">
 				Superforecasting web #1 in da world and grasp future faster
