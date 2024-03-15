@@ -14,7 +14,7 @@ const Code = () => {
 	return (
 		<div className=" overflow-x-hidden  flex justify-center  ">
 			<Head>
-				<title>Voting {code}</title>
+				<title>Voting...</title>
 			</Head>
 			<Menu />
 			<div className="flex flex-col  gap-y-3 pt-[100px] w-[800px]   items-center mx-auto ">
