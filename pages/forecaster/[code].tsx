@@ -22,8 +22,8 @@ const Code = () => {
 					Make it real,{code}
 				</div>
 
-				<div className="flex sm:flex-row justify-between sm:w-screen sm:px-[200px] flex-col">
-					<h2 className="title1 description overflow-hidden max-w-[300px]">
+				<div className="flex sm:flex-row  justify-between sm:w-screen sm:px-[200px] flex-col">
+					<h2 className=" flex items-center title1 description overflow-hidden ">
 						Voting Title
 					</h2>
 					<div className="description title1 text-center self-center ">

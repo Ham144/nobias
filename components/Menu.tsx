@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "./Button";
 import { useRouter } from "next/router";
+import {data:session}= useSession
 
 export default function Menu() {
 	const route = useRouter();
@@ -17,7 +18,7 @@ export default function Menu() {
 					alt="image of logo"
 					onClick={() => route.push("/")}
 				/>
-				<Button target="#" text="test" size="medium" />
+				<Button target="/login" text="Login" size="medium" />
 			</div>
 		</nav>
 	);
