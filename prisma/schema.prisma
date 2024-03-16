@@ -16,7 +16,7 @@ datasource db {
 type Candidate  {
   name  String
   key   Int
-  Title String
+  title String
 
 }
 
