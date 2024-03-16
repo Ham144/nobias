@@ -1,8 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useSession, getProviders, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
-const Login = () => {
+const Login = ({ providers }: any) => {
 	const googleIcon = (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +33,13 @@ const Login = () => {
 		</svg>
 	);
 
+	const { data: session } = useSession();
+	const router = useRouter();
+
+	if (session) {
+		router.push("/");
+	}
+
 	return (
 		<div>
 			<Head>
@@ -41,13 +50,26 @@ const Login = () => {
 				<h1 className="title1">
 					<Link href={"/"}>Nobias</Link>
 				</h1>
-				<button className="flex  gap-x-2 px-6 py-2 border-white hover:border-black hover:bg-black hover:text-white rounded-md">
-					{googleIcon}
-					Login With Google
-				</button>
+				{Object.values(providers).map((provider: any) => (
+					<button
+						key={Math.random() * Object.length}
+						className="flex  gap-x-2 px-6 py-2 border-white hover:border-black hover:bg-black hover:text-white rounded-md"
+						onClick={() => signIn(provider.id)}
+					>
+						{provider.name === "Google" && googleIcon}
+						Login With Google
+					</button>
+				))}
 			</div>
 		</div>
 	);
 };
 
+export async function getServerSideProps() {
+	const providers = await getProviders();
+
+	return {
+		props: { providers },
+	};
+}
 export default Login;

@@ -9,10 +9,15 @@ import { enUS } from "date-fns/locale";
 import { ForecastForm } from "../../components/ForecastForm";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Button from "../../components/Button";
+import { useSession } from "next-auth/react";
+
+import Restricted from "../../components/page/Restricted";
 
 registerLocale("enUS", enUS);
 
 const Create = () => {
+	const { data: session } = useSession();
+
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
 	const [title, setTitle] = useState("");
@@ -44,13 +49,17 @@ const Create = () => {
 		setCandidates(newCandidates);
 	};
 
+	if (!session) {
+		return <Restricted />;
+	}
+
 	return (
 		<div className="grid grid-cols-1 pt-3 justify-items-center">
 			<Head>
 				<title>hei</title>
 			</Head>
 			<Menu />
-			<div className="pt-[90px] sm:grid sm:grid-cols-2  sm:w-[70%]  mx-auto ">
+			<div className="pt-[100px] sm:grid sm:grid-cols-2  sm:w-[70%]  mx-auto ">
 				<Image
 					src={"/assets/3dcreate.webp"}
 					width={400}

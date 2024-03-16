@@ -16,8 +16,8 @@ export default function Banner() {
 				alt="banner for voting"
 			/>
 			<div className="flex flex-col sm:flex-row sm:space-x-8 mt-14 gap-2">
-				<Button target="/vote/create" text="buat vote baru" size="big-black" />
-				<Button target="/forecaster" text="ikutan vote" size="big-white" />
+				<Button target="/vote/create" text="Create New Vote" size="big-black" />
+				<Button target="/forecaster" text="Participate" size="big-white" />
 			</div>
 		</div>
 	);
