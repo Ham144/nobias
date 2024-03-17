@@ -11,8 +11,7 @@ export default function Form(props: Props) {
 		<input
 			className={` ${props.className} flex text-center border pt-3 font-sans  text-zinc-800 w-[100%]  bg-slate-100 rounded-sm overflow-hidden"`}
 			type={props.type}
-			value={props.value}
-			autoComplete="true"
+			autoFocus
 			onChange={(e) => props.onChange(e.target.value)}
 			placeholder={props.placeHolder}
 		/>

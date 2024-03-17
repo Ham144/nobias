@@ -21,8 +21,8 @@ registerLocale("enUS", enUS);
 const Create = () => {
 	const { data: session } = useSession();
 
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
+	const [startDateTime, setStartDateTime] = useState(new Date());
+	const [endDateTime, setEndDateTime] = useState(new Date());
 	const [title, setTitle] = useState("");
 	const [candidates, setCandidates] = useState<Candidate[]>([]);
 	const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ const Create = () => {
 
 	const addCandidateForm = () => {
 		const newCandidate: Candidate = {
-			name: "test",
+			name: "",
 			key: candidates.length + 1,
 			title: "",
 		};
@@ -54,7 +54,8 @@ const Create = () => {
 		setCandidates(newCandidates);
 	};
 
-	const createVote = () => {
+	const createVote = async (e: any) => {
+		e.preventDefault;
 		if (title === "") {
 			showAlert({ title: "Title not found ", message: "Tittle is required" });
 			return;
@@ -66,30 +67,30 @@ const Create = () => {
 			});
 			return;
 		}
-		if (startDate > endDate) {
+		if (startDateTime > endDateTime) {
 			showAlert({
 				title: "Illegal date input",
 				message: "End date is earlier then start date",
 			});
 			return;
 		}
-		if (candidates.some((candidate) => candidate.name === "")) {
-			showAlert({
-				title: "name is required",
-				message: "Candidates name is empty",
-			});
-		}
+		// if (candidates.some((candidate) => candidate.name === "")) {
+		// 	showAlert({
+		// 		title: "name is required",
+		// 		message: "Candidates name is empty",
+		// 	});
+		// 	return;
+		// }
 		setLoading(true);
-
-		fetch("api/vote", {
+		const res = await fetch("/api/vote", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
 				title,
-				startDate,
-				endDate,
+				startDateTime,
+				endDateTime,
 				candidates,
 				publisher: session?.user?.email,
 			}),
@@ -101,7 +102,9 @@ const Create = () => {
 				});
 				router.push("/");
 			})
+			.catch((e) => alert(e))
 			.finally(() => setLoading(false));
+		console.log(res);
 	};
 
 	if (!session) {
@@ -111,7 +114,7 @@ const Create = () => {
 	return (
 		<div className="grid grid-cols-1 pt-3 justify-items-center">
 			<Head>
-				<title>hei</title>
+				<title>Create Vote</title>
 			</Head>
 			<Menu />
 			<div className="pt-[100px] sm:grid sm:grid-cols-2  sm:w-[70%]  mx-auto ">
@@ -121,7 +124,7 @@ const Create = () => {
 					height={400}
 					alt="3d create"
 					className="flex  drop-shadow-lg	"
-				></Image>
+				/>
 				<div className="self-start space-y-16 sm:w-[500px] ">
 					<h1 className="title1">Buat Voting baru</h1>
 					<p className="description">input the required data before voting</p>
@@ -140,8 +143,8 @@ const Create = () => {
 								<ReactDatePicker
 									locale={"enUS"}
 									showTimeSelect
-									selected={startDate}
-									onChange={(date) => date && setStartDate(date)}
+									selected={startDateTime}
+									onChange={(date) => date && setStartDateTime(date)}
 									dateFormat={"Pp"}
 									minDate={new Date()}
 									className="flex text-center border pt-3 bg-slate-100 rounded-sm"
@@ -151,11 +154,11 @@ const Create = () => {
 								<div>End :</div>
 								<ReactDatePicker
 									locale={"enUS"}
-									onChange={(date) => date && setEndDate(date)}
-									selected={endDate}
+									onChange={(date) => date && setEndDateTime(date)}
+									selected={endDateTime}
 									showTimeSelect
 									dateFormat={"Pp"}
-									minDate={startDate}
+									minDate={startDateTime}
 									className="flex text-center border pt-3 bg-slate-100 rounded-sm"
 								/>
 							</label>
@@ -183,12 +186,7 @@ const Create = () => {
 			<ButtonAlert
 				className="border p-4"
 				text="Create"
-				onClick={() =>
-					showAlert({
-						title: " Alert test",
-						message: "Alert message appeared here",
-					})
-				}
+				onClick={() => createVote({})}
 			/>
 		</div>
 	);

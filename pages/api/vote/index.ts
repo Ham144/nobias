@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { prisma } from "../../../lib/prisma";
 import { code } from "../../../lib/code";
 
@@ -16,6 +16,7 @@ export default async function handle(
 		const result = await prisma.votes.create({
 			data: {
 				title: req.body.title,
+				candidates: req.body.candidates,
 				startDateTime: req.body.startDateTime,
 				endDateTime: req.body.endDateTime,
 				publisher: req.body.publisher,
@@ -25,6 +26,5 @@ export default async function handle(
 		});
 		return res.json(result);
 	}
-
 	return res.status(200).json({ data: "Hello world" });
 }

@@ -19,14 +19,14 @@ export function ForecastForm(props: Props) {
 
 	useEffect(() => {
 		setCandidate(props.candidate);
-	}, [props.candidate]);
+	}, []);
 
 	useEffect(() => {
 		props.submitCandidate(candidate);
 	}, [candidate]);
 
 	return (
-		<div className="flex description flex-col justify-items-center sm:w-[200px] text-center  border rounded-sm border-blue-500  ">
+		<div className="flex description flex-col justify-items-center sm:w-[200px] h-[150px] text-center  border rounded-sm border-blue-500  ">
 			<div className="flex flex-row-reverse w-full  justify-between">
 				<XCircleIcon
 					width={30}
