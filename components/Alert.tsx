@@ -1,59 +1,57 @@
 import { useState } from "react";
-import Button from "../.././nobias/components/Button";
+// import Button from "../../nobias/components/Button";
 import { createRoot } from "react-dom/client";
-// import Button from "./Button";
-
-// import { text } from "stream/consumers";
+import ButtonAlert from "../components/ButtonAlert";
 
 interface Props {
 	isOpen?: boolean;
 	title?: string;
 	message?: string;
 
-	positiveButtonText: string;
-	negativeButtonText: string;
+	positiveBtnText?: string;
+	negativeBtnText?: string;
 
-	onPositiveClick: () => void;
-	onNegativeClick: () => void;
+	onPositiveClick?: () => void;
+	onNegativeClick?: () => void;
 }
 
 function Alert(props: Props) {
-	const [isOpen, setIsopen] = useState(props.isOpen);
-
+	const [isOpen, setIsopn] = useState(true);
 	return (
 		<div
-			className={`relative z-10 ${!isOpen && "hidden"}`}
+			className={`relative z-20 ${!isOpen && "hidden"} `}
 			role="dialog"
-			aria-modal
+			aria-modal="true"
 		>
-			<div className="fixed inset-0 bg-zinc-900 bg-opacity-40 transition-opacity"></div>
-			<div className="fixed inset-0 z-10 overflow-y-auto">
-				<div className="flex min-h-full items-center justify-center text-center">
-					<div className="relative transform overflow-hidden bg-white text-left shadow-xl  transition-all p4  rounded-md">
-						<p className="text2xl font-bold ">
-							{props.title || "Title is here"}
-						</p>
-						<p className="text-lg  ">{props.message || "message is here"} </p>
+			<div className="fixed inset-0 bg-zinc-500  bg-opacity-40 overflow transition-opacity"></div>
+			<div className="fixed inset-0 z-10 overflow-y-auto ">
+				<div className="flex min-h-full  justify-center text-center items-center">
+					<div className="relative transform overflow-hidden bg-white  shadow-lg transition-all p-4 rounded-sm">
+						<div className="full p-5 text-center">
+							<p className="text2xl font-normal">
+								{props.title || "title undefined"}
+							</p>
+							<p className="textlg">{props.message || "message undefined"}</p>
+							<div className="space-x-3 mt-5">
+								<button
+									className="text-sm bg-zinc-100 px-2 py-1 hover:bg-zinc-200"
+									onClick={() => {
+										props.onNegativeClick && props.onNegativeClick();
+										setIsopn(false);
+									}}
+								>
+									{props.negativeBtnText || "cancel"}
+								</button>
 
-						<div className=" space-x-5 mt-5">
-							<button
-								className="text-center bg-zinc-100 px-2 py-1 "
-								onClick={() => {
-									props.onNegativeClick;
-									setIsopen(false);
-								}}
-							>
-								{props.negativeButtonText || "Kembali"}
-							</button>
-							<Button
-								className={`${!props.onPositiveClick && "hidden"}`}
-								onclick={() => {
-									props.onPositiveClick && props.onPositiveClick();
-									setIsopen(false);
-								}}
-								text={props.positiveButtonText || "Yes"}
-								size="small"
-							/>
+								<ButtonAlert
+									className={`${!props.onPositiveClick && "hidden"}`}
+									onClick={() => {
+										props.onPositiveClick && props.onPositiveClick();
+										setIsopn(false);
+									}}
+									text={props.positiveBtnText || "Ok"}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -66,17 +64,16 @@ export function showAlert(props: Props) {
 	const alert = document.createElement("div");
 	alert.id = "alert";
 	document.body.appendChild(alert);
-
 	const root = createRoot(alert);
 	root.render(
 		<Alert
-			isOpen={true}
+			isOpen={props.isOpen}
 			title={props.title}
 			message={props.message}
-			positiveButtonText="Yes"
-			negativeButtonText="No"
-			onPositiveClick={props.onPositiveClick}
+			negativeBtnText={props.negativeBtnText}
+			positiveBtnText={props.positiveBtnText}
 			onNegativeClick={props.onNegativeClick}
+			onPositiveClick={props.onPositiveClick}
 		/>
 	);
 }

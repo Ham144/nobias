@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { prisma } from "../../../lib/prisma";
+import { code } from "../../../lib/code";
 
 export default async function handle(
 	req: NextApiRequest,
@@ -18,9 +19,11 @@ export default async function handle(
 				startDateTime: req.body.startDateTime,
 				endDateTime: req.body.endDateTime,
 				publisher: req.body.publisher,
-				code: req.body.code,
+				code: code(6),
+				deletedAt: null,
 			},
 		});
+		return res.json(result);
 	}
 
 	return res.status(200).json({ data: "Hello world" });

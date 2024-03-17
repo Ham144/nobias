@@ -4,6 +4,8 @@ import Menu from "../../components/Menu";
 import Head from "next/head";
 import CandidateForm from "../../components/CandidateForm";
 import CountDown from "../../components/CountDown";
+import ButtonAlert from "../../components/ButtonAlert";
+import { showAlert } from "../../components/Alert";
 
 const Code = () => {
 	const router = useRouter();
@@ -46,6 +48,19 @@ const Code = () => {
 					<CandidateForm percent={percent} />
 					<CandidateForm percent={percent} />
 				</div>
+				<ButtonAlert
+					className="border p-4"
+					text="Dummy Button showAlert"
+					onClick={() =>
+						showAlert({
+							title: "title ",
+							message: "Alert message appeared here",
+							isOpen: true,
+							onPositiveClick: () => alert("Sent successfully"),
+							positiveBtnText: "Confirm",
+						})
+					}
+				/>
 			</div>
 		</div>
 	);

@@ -12,6 +12,9 @@ import Button from "../../components/Button";
 import { useSession } from "next-auth/react";
 
 import Restricted from "../../components/page/Restricted";
+import { showAlert } from "../../components/Alert";
+import { useRouter } from "next/router";
+import ButtonAlert from "../../components/ButtonAlert";
 
 registerLocale("enUS", enUS);
 
@@ -22,6 +25,8 @@ const Create = () => {
 	const [endDate, setEndDate] = useState(new Date());
 	const [title, setTitle] = useState("");
 	const [candidates, setCandidates] = useState<Candidate[]>([]);
+	const [loading, setLoading] = useState(false);
+	const router = useRouter();
 
 	const submitCandidate = (candidate: Candidate) => {
 		setCandidates(
@@ -47,6 +52,56 @@ const Create = () => {
 		});
 
 		setCandidates(newCandidates);
+	};
+
+	const createVote = () => {
+		if (title === "") {
+			showAlert({ title: "Title not found ", message: "Tittle is required" });
+			return;
+		}
+		if (candidates.length < 2) {
+			showAlert({
+				title: "Lack of Data",
+				message: "Data should be more then 2",
+			});
+			return;
+		}
+		if (startDate > endDate) {
+			showAlert({
+				title: "Illegal date input",
+				message: "End date is earlier then start date",
+			});
+			return;
+		}
+		if (candidates.some((candidate) => candidate.name === "")) {
+			showAlert({
+				title: "name is required",
+				message: "Candidates name is empty",
+			});
+		}
+		setLoading(true);
+
+		fetch("api/vote", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				title,
+				startDate,
+				endDate,
+				candidates,
+				publisher: session?.user?.email,
+			}),
+		})
+			.then((data) => {
+				showAlert({
+					title: "Succeed",
+					message: "Thanks for your participation",
+				});
+				router.push("/");
+			})
+			.finally(() => setLoading(false));
 	};
 
 	if (!session) {
@@ -125,7 +180,16 @@ const Create = () => {
 				/>
 			</div>
 			{/* {JSON.stringify(candidates)} */}
-			<Button text="Create" size="small" target="" />
+			<ButtonAlert
+				className="border p-4"
+				text="Create"
+				onClick={() =>
+					showAlert({
+						title: " Alert test",
+						message: "Alert message appeared here",
+					})
+				}
+			/>
 		</div>
 	);
 };
