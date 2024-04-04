@@ -32,15 +32,6 @@ const Code = () => {
 						<CountDown />
 					</div>
 				</div>
-				<div>
-					<h2 className="title1">test percent</h2>
-					<input
-						type="range"
-						value={percent}
-						onChange={(e) => setPercent(Number(e.target.value))}
-					/>
-					{percent}
-				</div>
 
 				<div className="flex flex-col sm:w-full  justify-center">
 					<CandidateForm percent={percent} />
