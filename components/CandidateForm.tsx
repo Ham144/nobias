@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Button from "../../nobias/components/Button";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import Button from "./Button";
 
 interface Props {
 	percent: number;
