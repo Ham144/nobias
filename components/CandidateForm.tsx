@@ -20,7 +20,6 @@ export default function CandidateForm(props: Props) {
 
 	const handleAdd = () => {
 		setPercentage(percentage + 1);
-		// alert("berhasil");
 		console.log(props.percent);
 	};
 
