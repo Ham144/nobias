@@ -11,9 +11,13 @@ export const authOptions = {
 			clientSecret: String(process.env.GOOGLE_SECRET),
 		}),
 	],
-
+	secret: process.env.NEXTAUTH_SECRET,
+	session: {
+		jwt: true,
+	},
 	callbacks: {
-		async session({ session, token, user }: any) {
+		async session({ session, user }: any) {
+			session.user.id = user.id;
 			return session;
 		},
 	},
