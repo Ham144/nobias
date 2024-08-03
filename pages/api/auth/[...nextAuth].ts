@@ -12,12 +12,10 @@ export const authOptions = {
 		}),
 	],
 	secret: process.env.NEXTAUTH_SECRET,
-	session: {
-		jwt: true,
-	},
 	callbacks: {
-		async session({ session, user }: any) {
-			session.user.id = user.id;
+		async session({ session, token, user }: any) {
+			// Add custom logic if needed
+			session.user.id = token.sub;
 			return session;
 		},
 	},
